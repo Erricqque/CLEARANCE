@@ -30,5 +30,5 @@ backend/data/
 .DS_Store
 Thumbs.db
 
-# Git
-*.git
+# Netlify
+.netlify
