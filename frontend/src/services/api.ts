@@ -1292,22 +1292,28 @@ export const loginWithLastName = (examNumber: string, lastName: string): Promise
   
   const studentHasPassword = hasPassword(student.id);
   
+  // Create the student object to store
+  const studentToStore = {
+    id: student.id,
+    examNumber: student.examNumber,
+    fullName: student.fullName,
+    combination: student.combination,
+    hasPassword: studentHasPassword,
+    clearancePercentage: student.clearancePercentage,
+    isFullyCleared: student.isFullyCleared
+  };
+  
+  // Store in localStorage
+  localStorage.setItem('token', `mock-token-${student.id}`);
+  localStorage.setItem('student', JSON.stringify(studentToStore));
+  
   return Promise.resolve({
     data: {
       token: `mock-token-${student.id}`,
-      student: {
-        id: student.id,
-        examNumber: student.examNumber,
-        fullName: student.fullName,
-        combination: student.combination,
-        hasPassword: studentHasPassword,
-        clearancePercentage: student.clearancePercentage,
-        isFullyCleared: student.isFullyCleared
-      }
+      student: studentToStore
     }
   });
 };
-
 export const loginWithPassword = (examNumber: string, password: string): Promise<any> => {
   console.log(`🔐 Password login attempt: ${examNumber}`);
   
@@ -1405,6 +1411,7 @@ export const getClearanceData = (): Promise<any> => {
   
   return new Promise((resolve, reject) => {
     try {
+      // Get the logged-in student from localStorage
       const studentStr = localStorage.getItem('student');
       
       if (!studentStr) {
@@ -1413,24 +1420,28 @@ export const getClearanceData = (): Promise<any> => {
         return;
       }
       
+      // Parse the logged-in student data
       const loggedInStudent = JSON.parse(studentStr);
-      const studentId = loggedInStudent.id;
+      console.log("👤 Logged in student:", loggedInStudent);
       
-      const student = students.find(s => s.id === studentId);
+      // Find the COMPLETE student data by ID
+      const student = students.find(s => s.id === loggedInStudent.id);
       
       if (!student) {
-        console.log("❌ Student data not found");
+        console.log("❌ Student data not found for ID:", loggedInStudent.id);
         reject({ response: { data: { msg: "Student data not found" } } });
         return;
       }
       
-      console.log(`✅ Clearance data retrieved for ${student.fullName}`);
+      console.log(`✅ Loading data for: ${student.fullName} (${student.examNumber})`);
       
+      // Calculate cleared items count
       const itemsCleared = Object.values(student.items).filter(i => i.status).length;
       const subjectsPaid = student.subjects.filter(s => s.paid).length;
       const feesPaid = (student.fees.form5.paid ? 1 : 0) + (student.fees.form6.paid ? 1 : 0);
       const totalCleared = itemsCleared + subjectsPaid + feesPaid;
       
+      // Return the CORRECT student's data
       resolve({ 
         data: {
           student: {
@@ -1455,7 +1466,6 @@ export const getClearanceData = (): Promise<any> => {
     }
   });
 };
-
 export const getDashboardStats = (): Promise<any> => {
   console.log("📈 Fetching dashboard stats");
   
