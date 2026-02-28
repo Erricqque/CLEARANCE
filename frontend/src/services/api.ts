@@ -1,6 +1,6 @@
 // ============================================
 // MWENGE SECONDARY SCHOOL - COMPLETE API
-// ALL 30 STUDENTS - FULLY WORKING
+// ALL 30 STUDENTS - FULLY CORRECTED
 // ============================================
 
 console.log("✅ API Service Loaded - All 30 Students Ready");
@@ -45,7 +45,7 @@ export interface Student {
 // COMPLETE STUDENT DATABASE - ALL 30 STUDENTS
 // ============================================
 const students: Student[] = [
-  // ========== STUDENT 1 ==========
+  // ========== STUDENT 1 ========== S0334-0971
   {
     id: "1",
     examNumber: "S0334-0971",
@@ -83,7 +83,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 2 ==========
+  // ========== STUDENT 2 ========== S0334-0972
   {
     id: "2",
     examNumber: "S0334-0972",
@@ -121,7 +121,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-10" }
     }
   },
-  // ========== STUDENT 3 ==========
+  // ========== STUDENT 3 ========== S0334-0973
   {
     id: "3",
     examNumber: "S0334-0973",
@@ -159,7 +159,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 4 ==========
+  // ========== STUDENT 4 ========== S0334-0974
   {
     id: "4",
     examNumber: "S0334-0974",
@@ -197,7 +197,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 5 ==========
+  // ========== STUDENT 5 ========== S0334-0975
   {
     id: "5",
     examNumber: "S0334-0975",
@@ -235,7 +235,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-15" }
     }
   },
-  // ========== STUDENT 6 ==========
+  // ========== STUDENT 6 ========== S0334-0976
   {
     id: "6",
     examNumber: "S0334-0976",
@@ -273,7 +273,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 7 ==========
+  // ========== STUDENT 7 ========== S0334-0977
   {
     id: "7",
     examNumber: "S0334-0977",
@@ -311,7 +311,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-20" }
     }
   },
-  // ========== STUDENT 8 ==========
+  // ========== STUDENT 8 ========== S0334-0978
   {
     id: "8",
     examNumber: "S0334-0978",
@@ -349,7 +349,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 9 ==========
+  // ========== STUDENT 9 ========== S0334-0979 - ERRIC CHACHA MAGANDA
   {
     id: "9",
     examNumber: "S0334-0979",
@@ -387,7 +387,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 10 ==========
+  // ========== STUDENT 10 ========== S0334-0980
   {
     id: "10",
     examNumber: "S0334-0980",
@@ -425,7 +425,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-28" }
     }
   },
-  // ========== STUDENT 11 ==========
+  // ========== STUDENT 11 ========== S0334-0981
   {
     id: "11",
     examNumber: "S0334-0981",
@@ -463,7 +463,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 12 ==========
+  // ========== STUDENT 12 ========== S0334-0982
   {
     id: "12",
     examNumber: "S0334-0982",
@@ -501,7 +501,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 13 ==========
+  // ========== STUDENT 13 ========== S0334-0983
   {
     id: "13",
     examNumber: "S0334-0983",
@@ -539,7 +539,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-01" }
     }
   },
-  // ========== STUDENT 14 ==========
+  // ========== STUDENT 14 ========== S0334-0984
   {
     id: "14",
     examNumber: "S0334-0984",
@@ -577,7 +577,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-20" }
     }
   },
-  // ========== STUDENT 15 ==========
+  // ========== STUDENT 15 ========== S0334-0985
   {
     id: "15",
     examNumber: "S0334-0985",
@@ -615,7 +615,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 16 ==========
+  // ========== STUDENT 16 ========== S0334-0986
   {
     id: "16",
     examNumber: "S0334-0986",
@@ -653,7 +653,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 17 ==========
+  // ========== STUDENT 17 ========== S0334-0987
   {
     id: "17",
     examNumber: "S0334-0987",
@@ -691,7 +691,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-05" }
     }
   },
-  // ========== STUDENT 18 ==========
+  // ========== STUDENT 18 ========== S0334-0988
   {
     id: "18",
     examNumber: "S0334-0988",
@@ -729,7 +729,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-30" }
     }
   },
-  // ========== STUDENT 19 ==========
+  // ========== STUDENT 19 ========== S0334-0989
   {
     id: "19",
     examNumber: "S0334-0989",
@@ -767,7 +767,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 20 ==========
+  // ========== STUDENT 20 ========== S0334-0990
   {
     id: "20",
     examNumber: "S0334-0990",
@@ -805,7 +805,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-12" }
     }
   },
-  // ========== STUDENT 21 ==========
+  // ========== STUDENT 21 ========== S0334-0991
   {
     id: "21",
     examNumber: "S0334-0991",
@@ -843,7 +843,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 22 ==========
+  // ========== STUDENT 22 ========== S0334-0992
   {
     id: "22",
     examNumber: "S0334-0992",
@@ -881,7 +881,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 23 ==========
+  // ========== STUDENT 23 ========== S0334-0993
   {
     id: "23",
     examNumber: "S0334-0993",
@@ -919,7 +919,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-08" }
     }
   },
-  // ========== STUDENT 24 ==========
+  // ========== STUDENT 24 ========== S0334-0994
   {
     id: "24",
     examNumber: "S0334-0994",
@@ -957,7 +957,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-25" }
     }
   },
-  // ========== STUDENT 25 ==========
+  // ========== STUDENT 25 ========== S0334-0995
   {
     id: "25",
     examNumber: "S0334-0995",
@@ -995,7 +995,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 26 ==========
+  // ========== STUDENT 26 ========== S0334-0996
   {
     id: "26",
     examNumber: "S0334-0996",
@@ -1033,7 +1033,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-08-15" }
     }
   },
-  // ========== STUDENT 27 ==========
+  // ========== STUDENT 27 ========== S0334-0997
   {
     id: "27",
     examNumber: "S0334-0997",
@@ -1071,7 +1071,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 28 ==========
+  // ========== STUDENT 28 ========== S0334-0998
   {
     id: "28",
     examNumber: "S0334-0998",
@@ -1109,7 +1109,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: true, paidDate: "2024-07-18" }
     }
   },
-  // ========== STUDENT 29 ==========
+  // ========== STUDENT 29 ========== S0334-0999
   {
     id: "29",
     examNumber: "S0334-0999",
@@ -1147,7 +1147,7 @@ const students: Student[] = [
       form6: { amount: 950000, paid: false }
     }
   },
-  // ========== STUDENT 30 ==========
+  // ========== STUDENT 30 ========== S0334-1000
   {
     id: "30",
     examNumber: "S0334-1000",
@@ -1334,7 +1334,8 @@ export const getClearanceData = (): Promise<any> => {
       }
       
       const loggedInStudent = JSON.parse(studentStr);
-      // CRITICAL: Find by ID, not by index!
+      
+      // IMPORTANT: Find by ID to get the correct student
       const fullStudent = students.find(s => s.id === loggedInStudent.id);
       
       if (!fullStudent) {
@@ -1391,4 +1392,13 @@ export const getDashboardStats = (): Promise<any> => {
       });
     }, 500);
   });
+};
+
+// Default export
+export default {
+  loginWithLastName,
+  loginWithPassword,
+  setPassword,
+  getClearanceData,
+  getDashboardStats
 };
