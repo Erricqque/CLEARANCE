@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     Container,
     Paper,
@@ -19,7 +19,19 @@ import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import LoginIcon from '@mui/icons-material/Login';
 import KeyIcon from '@mui/icons-material/Key';
-import { loginWithLastName, loginWithPassword } from '../services/api';
+
+// ============================================
+// MOCK DATA - NO API CALLS AT ALL
+// ============================================
+const mockStudent = {
+  id: "1",
+  examNumber: "S0334-0971",
+  fullName: "ABBUBBAKAR AMIN ADAMN",
+  combination: "PMC",
+  hasPassword: false,
+  clearancePercentage: 65,
+  isFullyCleared: false
+};
 
 const Login: React.FC = () => {
     const theme = useTheme();
@@ -36,19 +48,23 @@ const Login: React.FC = () => {
         setError('');
         setLoading(true);
 
-        try {
-            const response = method === 'lastname'
-                ? await loginWithLastName(examNumber, lastName)
-                : await loginWithPassword(examNumber, password);
-
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('student', JSON.stringify(response.data.student));
+        // Simulate network delay
+        setTimeout(() => {
+            // ALWAYS LOGIN SUCCESSFULLY - NO API CALLS!
+            console.log("Login successful with:", examNumber, lastName || password);
+            
+            // Store mock data in localStorage
+            localStorage.setItem('token', 'mock-token-12345');
+            localStorage.setItem('student', JSON.stringify({
+                ...mockStudent,
+                hasPassword: method === 'password'
+            }));
+            
+            // Navigate to dashboard
             navigate('/dashboard');
-        } catch (err: any) {
-            setError(err.response?.data?.msg || 'Login failed');
-        } finally {
+            
             setLoading(false);
-        }
+        }, 1000);
     };
 
     return (
@@ -157,17 +173,11 @@ const Login: React.FC = () => {
                             </ToggleButton>
                         </ToggleButtonGroup>
 
-                        <AnimatePresence mode="wait">
-                            {error && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0 }}
-                                >
-                                    <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        {error && (
+                            <Alert severity="error" sx={{ mb: 2 }}>
+                                {error}
+                            </Alert>
+                        )}
 
                         <form onSubmit={handleSubmit}>
                             <TextField
@@ -183,48 +193,32 @@ const Login: React.FC = () => {
                                 }}
                             />
 
-                            <AnimatePresence mode="wait">
-                                {method === 'lastname' ? (
-                                    <motion.div
-                                        key="lastname"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: 20 }}
-                                    >
-                                        <TextField
-                                            fullWidth
-                                            label="Last Name"
-                                            value={lastName}
-                                            onChange={(e) => setLastName(e.target.value)}
-                                            margin="normal"
-                                            required
-                                            InputProps={{
-                                                startAdornment: <PersonIcon sx={{ mr: 1, color: 'text.secondary' }} />
-                                            }}
-                                        />
-                                    </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="password"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: 20 }}
-                                    >
-                                        <TextField
-                                            fullWidth
-                                            label="Password"
-                                            type="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            margin="normal"
-                                            required
-                                            InputProps={{
-                                                startAdornment: <LockIcon sx={{ mr: 1, color: 'text.secondary' }} />
-                                            }}
-                                        />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                            {method === 'lastname' ? (
+                                <TextField
+                                    fullWidth
+                                    label="Last Name"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    margin="normal"
+                                    required
+                                    InputProps={{
+                                        startAdornment: <PersonIcon sx={{ mr: 1, color: 'text.secondary' }} />
+                                    }}
+                                />
+                            ) : (
+                                <TextField
+                                    fullWidth
+                                    label="Password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    margin="normal"
+                                    required
+                                    InputProps={{
+                                        startAdornment: <LockIcon sx={{ mr: 1, color: 'text.secondary' }} />
+                                    }}
+                                />
+                            )}
 
                             <motion.div
                                 whileHover={{ scale: 1.02 }}
@@ -245,7 +239,7 @@ const Login: React.FC = () => {
                         </form>
 
                         <Typography variant="caption" display="block" sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}>
-                            First time? Use your last name. Returning students use password.
+                            Demo Mode: Any credentials work!
                         </Typography>
                     </Paper>
                 </motion.div>

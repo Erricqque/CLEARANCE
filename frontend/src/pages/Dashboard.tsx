@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -37,19 +37,38 @@ import {
     Book as BookIcon,
     TrendingUp as TrendingUpIcon
 } from '@mui/icons-material';
-import { getClearanceData, setPassword } from '../services/api';
 
-interface ClearanceData {
+// ============================================
+// TypeScript Interfaces
+// ============================================
+interface ItemType {
+    name: string;
+    status: boolean;
+}
+
+interface SubjectType {
+    letter: string;
+    name: string;
+    paid: boolean;
+}
+
+interface FeeType {
+    amount: number;
+    paid: boolean;
+    paidDate?: string;
+}
+
+interface ClearanceDataType {
     student: {
         examNumber: string;
         fullName: string;
         combination: string;
     };
-    items: Record<string, { name: string; status: boolean }>;
-    subjects: Array<{ letter: string; name: string; paid: boolean }>;
+    items: Record<string, ItemType>;
+    subjects: SubjectType[];
     fees: {
-        form5: { amount: number; paid: boolean; paidDate?: string };
-        form6: { amount: number; paid: boolean; paidDate?: string };
+        form5: FeeType;
+        form6: FeeType;
     };
     clearance: {
         total: number;
@@ -59,10 +78,53 @@ interface ClearanceData {
     };
 }
 
+// ============================================
+// MOCK DATA - NO API CALLS
+// ============================================
+const mockClearanceData: ClearanceDataType = {
+  student: {
+    examNumber: "S0334-0971",
+    fullName: "ABBUBBAKAR AMIN ADAMN",
+    combination: "PMC"
+  },
+  items: {
+    softBroom: { name: "Soft Broom", status: true },
+    softBrush: { name: "Soft Brush", status: false },
+    hoe: { name: "Hoe", status: true },
+    slasher: { name: "Slasher", status: true },
+    bucket: { name: "Bucket", status: false },
+    plate: { name: "Plate", status: true },
+    cup: { name: "Cup", status: true },
+    spoon: { name: "Spoon", status: true },
+    bedSheet: { name: "Bed Sheet", status: false },
+    mattress: { name: "Mattress", status: true },
+    rimPapers: { name: "Rim Papers", status: false },
+    schoolFees: { name: "School Fees", status: false },
+    seriesContributions: { name: "Series Contributions", status: true },
+    uniforms: { name: "Uniforms", status: true }
+  },
+  subjects: [
+    { letter: "A", name: "Physics", paid: true },
+    { letter: "B", name: "Mathematics", paid: false },
+    { letter: "C", name: "Computer Science", paid: true },
+    { letter: "D", name: "General Studies", paid: true }
+  ],
+  fees: {
+    form5: { amount: 800000, paid: true, paidDate: "2024-01-15" },
+    form6: { amount: 950000, paid: false }
+  },
+  clearance: {
+    total: 20,
+    cleared: 13,
+    percentage: 65,
+    isFullyCleared: false
+  }
+};
+
 const Dashboard: React.FC = () => {
     const theme = useTheme();
     const navigate = useNavigate();
-    const [data, setData] = useState<ClearanceData | null>(null);
+    const [data, setData] = useState<ClearanceDataType | null>(null);
     const [loading, setLoading] = useState(true);
     const [passwordDialog, setPasswordDialog] = useState(false);
     const [newPassword, setNewPassword] = useState('');
@@ -70,24 +132,26 @@ const Dashboard: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const fetchData = useCallback(async () => {
-        try {
-            const response = await getClearanceData();
-            setData(response.data);
+    useEffect(() => {
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/');
+            return;
+        }
+
+        // Load mock data
+        setTimeout(() => {
+            setData(mockClearanceData);
+            setLoading(false);
+            
+            // Check if student needs to set password
             const student = JSON.parse(localStorage.getItem('student') || '{}');
             if (!student.hasPassword) {
                 setPasswordDialog(true);
             }
-        } catch {
-            navigate('/');
-        } finally {
-            setLoading(false);
-        }
+        }, 1000);
     }, [navigate]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -95,7 +159,7 @@ const Dashboard: React.FC = () => {
         navigate('/');
     };
 
-    const handleSetPassword = async () => {
+    const handleSetPassword = () => {
         if (newPassword.length < 6) {
             setPasswordError('Password must be at least 6 characters');
             return;
@@ -105,19 +169,16 @@ const Dashboard: React.FC = () => {
             return;
         }
 
-        try {
-            await setPassword(newPassword);
-            setSuccess('Password set successfully!');
-            setTimeout(() => {
-                setPasswordDialog(false);
-                setSuccess('');
-            }, 2000);
+        // Simulate password save
+        setSuccess('Password set successfully!');
+        setTimeout(() => {
+            setPasswordDialog(false);
+            setSuccess('');
+            // Update student in localStorage
             const student = JSON.parse(localStorage.getItem('student') || '{}');
             student.hasPassword = true;
             localStorage.setItem('student', JSON.stringify(student));
-        } catch {
-            setPasswordError('Failed to set password');
-        }
+        }, 1500);
     };
 
     const getItemIcon = (key: string) => {
@@ -259,7 +320,7 @@ const Dashboard: React.FC = () => {
                     </motion.div>
                 )}
 
-                {/* Items Grid - Using Box with Flexbox instead of Grid to avoid type issues */}
+                {/* Items Grid */}
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
                     {/* Properties */}
                     <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -276,7 +337,7 @@ const Dashboard: React.FC = () => {
                                     </Typography>
                                     <Divider sx={{ mb: 2 }} />
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                                        {Object.entries(data.items).map(([key, item], index) => (
+                                        {Object.entries(data.items).map(([key, item]: [string, ItemType], index) => (
                                             <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }} key={key}>
                                                 <motion.div
                                                     initial={{ opacity: 0, y: 10 }}
@@ -339,7 +400,7 @@ const Dashboard: React.FC = () => {
                                             </Typography>
                                             <Divider sx={{ mb: 2 }} />
                                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                                                {data.subjects.map((subject, index) => (
+                                                {data.subjects.map((subject: SubjectType, index) => (
                                                     <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }} key={index}>
                                                         <Paper
                                                             sx={{
